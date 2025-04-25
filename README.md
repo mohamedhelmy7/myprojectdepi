@@ -1,2 +1,2 @@
 # DEPI PROJECT
-Full stack.NET Project
+Full stack .NET Library Project
