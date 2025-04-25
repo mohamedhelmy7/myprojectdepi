@@ -1,2 +1,2 @@
-# myprojectdepi
-fullstck.net project library
+# DEPI PROJECT
+Full stack.NET Project
