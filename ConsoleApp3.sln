@@ -1,25 +1,131 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.8.34322.80
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp3", "ConsoleApp3.csproj", "{793CAB72-D472-40DD-B007-7FD673E90E89}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{793CAB72-D472-40DD-B007-7FD673E90E89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{793CAB72-D472-40DD-B007-7FD673E90E89}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{793CAB72-D472-40DD-B007-7FD673E90E89}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{793CAB72-D472-40DD-B007-7FD673E90E89}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {803BFEE3-B6BF-41C8-89B3-67E5FE423740}
-	EndGlobalSection
-EndGlobal
+using System.Collections.Generic;
+
+public class User
+{
+    public long UserId { get; set; }
+    public string Name { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
+    public string? Phone { get; set; }
+
+    public ICollection<Borrow>? Borrows { get; set; }
+}
+//////////////////////////////////////////////////////////////////////////
+using System.Collections.Generic;
+
+public class Admin
+{
+    public long AdminId { get; set; }
+    public string Name { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
+
+    public ICollection<Book>? Books { get; set; }
+}
+
+//////////////////////////////////////////////////////////////////////////
+using System.Collections.Generic;
+
+public class Category
+{
+    public long CategoryId { get; set; }
+    public string Name { get; set; }
+
+    public ICollection<Book>? Books { get; set; }
+}
+//////////////////////////////////////////////////////////////////////////
+using System.Collections.Generic;
+
+public class Book
+{
+    public long BookId { get; set; }
+    public string Title { get; set; }
+    public string Author { get; set; }
+    public string? Description { get; set; }
+
+    public long? CategoryId { get; set; }
+    public Category? Category { get; set; }
+
+    public long? AdminId { get; set; }
+    public Admin? Admin { get; set; }
+
+    public ICollection<Borrow>? Borrows { get; set; }
+}
+
+//////////////////////////////////////////////////////////////////////////
+using System;
+
+public class Borrow
+{
+    public long BorrowId { get; set; }
+
+    public long? UserId { get; set; }
+    public User? User { get; set; }
+
+    public long? BookId { get; set; }
+    public Book? Book { get; set; }
+
+    public DateTimeOffset BorrowDate { get; set; }
+}
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////
+
+using Microsoft.EntityFrameworkCore;
+
+public class LibraryContext : DbContext
+{
+    public LibraryContext(DbContextOptions<LibraryContext> options)
+        : base(options)
+    {
+    }
+
+    public DbSet<User> Users { get; set; }
+    public DbSet<Admin> Admins { get; set; }
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<Book> Books { get; set; }
+    public DbSet<Borrow> Borrows { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Book>()
+            .HasOne(b => b.Category)
+            .WithMany(c => c.Books)
+            .HasForeignKey(b => b.CategoryId);
+
+        modelBuilder.Entity<Book>()
+            .HasOne(b => b.Admin)
+            .WithMany(a => a.Books)
+            .HasForeignKey(b => b.AdminId);
+
+        modelBuilder.Entity<Borrow>()
+            .HasOne(b => b.User)
+            .WithMany(u => u.Borrows)
+            .HasForeignKey(b => b.UserId);
+
+        modelBuilder.Entity<Borrow>()
+            .HasOne(b => b.Book)
+            .WithMany(bk => bk.Borrows)
+            .HasForeignKey(b => b.BookId);
+    }
+}
+////////////////////////////////////////////////////
+
+•	أضف السطر التالي إلى Startup.cs أو Program.cs (حسب نسخة .NET):
+csharp
+CopyEdit
+
+
+services.AddDbContext<LibraryContext>(options =>
+    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+////////////////////////////////////////////////////////////////////////////////////////
+
+•	اضبط الاتصال بقاعدة البيانات في appsettings.json.
