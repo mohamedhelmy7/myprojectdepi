@@ -1,0 +1,23 @@
+﻿/* تأكد من أن html و body يمتدان على كامل ارتفاع الصفحة */
+html, body {
+    height: 100%; /* تعيين ارتفاع الصفحة ليأخذ المساحة بالكامل */
+    margin: 0; /* إزالة أي هوامش افتراضية */
+}
+
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* الحاوية الرئيسية تأخذ المساحة بالكامل */
+}
+
+.main-content {
+    flex: 1; /* هذا يضمن أن المحتوى يأخذ المساحة المتبقية بين الـ header والـ footer */
+}
+
+.footer {
+    width: 100%;
+    background-color: #f8f9fa; /* خلفية فاتحة */
+    text-align: center;
+    padding: 15px 0;
+    line-height: 60px; /* لتحديد ارتفاع الـ footer */
+}

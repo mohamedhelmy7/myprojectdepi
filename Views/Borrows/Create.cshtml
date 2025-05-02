@@ -1,0 +1,22 @@
+﻿@model DEPI_Library.Models.Borrow
+
+@{
+    ViewData["Title"] = "Create Borrow";
+}
+
+<div class="container mt-5">
+    <h2 class="text-primary">📚 Add New Borrow</h2>
+    <form asp-action="Create" method="post" class="mt-4">
+        <div class="mb-3">
+            <label for="BookId" class="form-label">Book</label>
+            <select asp-for="BookId" class="form-control" asp-items="ViewBag.Books"></select>
+        </div>
+
+        <div class="mb-3">
+            <label for="UserId" class="form-label">User</label>
+            <select asp-for="UserId" class="form-control" asp-items="ViewBag.Users"></select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Borrow</button>
+    </form>
+</div>

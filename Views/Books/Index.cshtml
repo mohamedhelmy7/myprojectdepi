@@ -1,0 +1,47 @@
+﻿@model IEnumerable<DEPI_Library.Models.Book>
+
+@{
+    ViewData["Title"] = "Books";
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary">📚 Book List</h2>
+        <a asp-action="Create" class="btn btn-lg btn-success px-4 py-2 shadow-lg rounded-pill">+ Add Book</a>
+    </div>
+
+    <table class="table table-hover shadow-sm rounded bg-white">
+        <thead class="thead-dark">
+            <tr class="bg-dark text-white">
+                <th>Title</th>
+                <th>Author</th>
+                <th>Category</th>
+                <th style="width: 200px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model)
+            {
+                <tr>
+                    <td>@book.Title</td>
+                    <td>@book.Author</td>
+                    <td>@book.Category?.Name  </td>
+                    <td>
+                        <!-- Action Buttons -->
+                        <div class="btn-group" role="group">
+                            <a asp-action="Edit" asp-route-id="@book.BookId" class="btn btn-outline-primary btn-lg px-3 py-2 shadow-sm rounded-3 mx-2 transition-all hover:bg-blue-600 hover:text-white">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@book.BookId" class="btn btn-outline-danger btn-lg px-3 py-2 shadow-sm rounded-3 mx-2 transition-all hover:bg-red-600 hover:text-white">
+                                <i class="bi bi-trash"></i> Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Add Bootstrap Icons (Optional for edit/delete icons) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">

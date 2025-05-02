@@ -1,0 +1,36 @@
+﻿@model IEnumerable<DEPI_Library.Models.Borrow>
+
+@{
+    ViewData["Title"] = "Borrow Report";
+}
+
+<div class="container mt-5">
+    <h2 class="text-primary">📖 Borrow Report</h2>
+
+    <!-- زر إضافة استعارة جديدة (محاذاة لليمين و تصميم حديث) -->
+    <div class="d-flex justify-content-end mb-3">
+        <a href="@Url.Action("Create", "Borrows")" class="btn btn-outline-primary btn-lg px-4 py-2">
+            <i class="fas fa-plus-circle"></i> Add Borrow
+        </a>
+    </div>
+
+    <table class="table table-bordered mt-4">
+        <thead>
+            <tr>
+                <th>Book Title</th>
+                <th>User Name</th>
+                <th>Borrow Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var borrow in Model)
+            {
+                <tr>
+                    <td>@borrow.Book.Title</td>
+                    <td>@borrow.User.Name</td>
+                    <td>@borrow.BorrowDate.ToString("yyyy-MM-dd")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
