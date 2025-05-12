@@ -5,14 +5,8 @@ using System.Linq;
 
 namespace DEPI_Library.Controllers
 {
-    public class UserAuthController : Controller
+    public class UserAuthController(LibraryContext context) : Controller
     {
-        private readonly LibraryContext _context;
-
-        public UserAuthController(LibraryContext context)
-        {
-            _context = context;
-        }
 
         // GET: UserAuth/Register
         public IActionResult Register()
@@ -26,14 +20,14 @@ namespace DEPI_Library.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_context.Users.Any(u => u.Email == user.Email))
+                if (context.Users.Any(u => u.Email == user.Email))
                 {
                     ModelState.AddModelError("Email", "Email is already registered.");
                     return View(user);
                 }
 
-                _context.Users.Add(user);
-                _context.SaveChanges();
+                context.Users.Add(user);
+                context.SaveChanges();
                 return RedirectToAction("Login");
             }
 
@@ -50,7 +44,7 @@ namespace DEPI_Library.Controllers
         [HttpPost]
         public IActionResult Login(string email, string password)
         {
-            var user = _context.Users
+            var user = context.Users
                 .FirstOrDefault(u => u.Email == email && u.Password == password);
 
             if (user != null)

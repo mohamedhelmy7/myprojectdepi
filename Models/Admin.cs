@@ -9,13 +9,13 @@ namespace DEPI_Library.Models
         public long AdminId { get; set; }
 
         [Required, MaxLength(100)]
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         [Required, EmailAddress]
-        public string Email { get; set; }
+        public required string Email { get; set; }
 
         [Required, DataType(DataType.Password)]
-        public string Password { get; set; }
+        public required string Password { get; set; }
 
         public ICollection<Book>? Books { get; set; }
     }

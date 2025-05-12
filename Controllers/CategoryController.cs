@@ -2,37 +2,29 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-public class CategoryController : Controller
+namespace DEPI_Library.Controllers
 {
-   
-    private readonly LibraryContext _context;
-
-    public CategoryController(LibraryContext context)
-    // Constructor to initialize the context
+    public class CategoryController(LibraryContext context) : Controller
     {
-       
-        _context = context;
-       
-    }
-
-    public IActionResult Index()
-    {
-        List<Category> categories =  _context.Categories.ToList();
+        public IActionResult Index()
+        {
+            List<Category> categories = [.. context.Categories];
               
 
-        return View (categories);
+            return View (categories);
+        }
+        public IActionResult BooksByCategory(long id)
+        {
+            var category = context.Categories
+                .Include(c => c.Books) // ندرج الكتب الخاصة بالتصنيف
+                .FirstOrDefault(c => c.CategoryId == id);
+
+            if (category == null)
+                return NotFound();
+
+            return View(category);
+        }
+
+
     }
-    public IActionResult BooksByCategory(long id)
-    {
-        var category = _context.Categories
-            .Include(c => c.Books) // ندرج الكتب الخاصة بالتصنيف
-            .FirstOrDefault(c => c.CategoryId == id);
-
-        if (category == null)
-            return NotFound();
-
-        return View(category);
-    }
-
-
 }

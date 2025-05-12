@@ -6,11 +6,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace DEPI_Library.Models
 {
-    public class LibraryContext : DbContext
+    public class LibraryContext(DbContextOptions<LibraryContext> options) : DbContext(options)
     {
-        public LibraryContext(DbContextOptions<LibraryContext> options)
-        : base(options) { }
-
         public DbSet<User> Users { get; set; }
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Category> Categories { get; set; }
