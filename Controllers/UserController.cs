@@ -45,7 +45,7 @@ namespace DEPI_Library.Controllers
         public IActionResult Login(string email, string password)
         {
             var user = context.Users
-                .FirstOrDefault(u => u.Email == email && u.Password == password);
+                .FirstOrDefault(u => u.Email == email && u.PasswordHash == password);
 
             if (user != null)
             {

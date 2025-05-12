@@ -8,6 +8,8 @@ namespace DEPI_Library.Models
 {
     public class LibraryContext(DbContextOptions<LibraryContext> options) : DbContext(options)
     {
+        internal readonly object ForgotPasswordToken;
+
         public DbSet<User> Users { get; set; }
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -26,8 +28,8 @@ namespace DEPI_Library.Models
 
             // Seed Users
             modelBuilder.Entity<User>().HasData(
-                new User { UserId = 1, Name = "John Doe", Email = "john@example.com", Password = "user123", Phone = "1234567890" },
-                new User { UserId = 2, Name = "Jane Smith", Email = "jane@example.com", Password = "user123", Phone = "9876543210" }
+                new User { UserId = 1, Name = "John Doe", Email = "john@example.com", PasswordHash = "user123" },
+                new User { UserId = 2, Name = "Jane Smith", Email = "jane@example.com", PasswordHash = "user123" }
             );
 
             // Seed Categories

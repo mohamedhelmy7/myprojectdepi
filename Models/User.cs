@@ -1,6 +1,4 @@
-﻿using DEPI_Library.Models;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DEPI_Library.Models
 {
@@ -8,18 +6,13 @@ namespace DEPI_Library.Models
     {
         public long UserId { get; set; }
 
-        [Required, MaxLength(100)]
-        public required string Name { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
 
-        [Required, EmailAddress]
-        public required string Email { get; set; }
-
-        [Required, DataType(DataType.Password)]
-        public required string Password { get; set; }
-
-        [Phone]
-        public string? Phone { get; set; }
+        public string PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
 
         public ICollection<Borrow>? Borrows { get; set; }
     }
+
 }

@@ -26,8 +26,8 @@
             @foreach (var borrow in Model)
             {
                 <tr>
-                    <td>@borrow.Book.Title</td>
-                    <td>@borrow.User.Name</td>
+                    <td>@borrow.Book?.Title</td>
+                    <td>@borrow.User?.Name</td>
                     <td>@borrow.BorrowDate.ToString("yyyy-MM-dd")</td>
                 </tr>
             }
