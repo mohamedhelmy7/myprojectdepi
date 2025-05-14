@@ -1,1 +1,1 @@
-# DEPI Library
+# DEPI Project
