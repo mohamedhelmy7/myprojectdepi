@@ -10,23 +10,32 @@
             <div class="card shadow-lg border-0 rounded-4">
                 <div class="card-body p-4">
                     <h3 class="text-center mb-4">Login</h3>
-                    <form method="post">
+
+                    <!-- ✅ تم تعديل الفورم لتحديد الكنترولر والأكشن -->
+                    <form asp-action="Login" asp-controller="Account" method="post">
                         <div class="form-group mb-3">
-                            <label for="Email" class="form-label">Email</label>
+                            <label asp-for="Email" class="form-label">Email</label>
                             <input asp-for="Email" class="form-control" placeholder="Enter your email" />
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
                         <div class="form-group mb-4">
-                            <label for="Password" class="form-label">Password</label>
+                            <label asp-for="Password" class="form-label">Password</label>
                             <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" />
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
+
+                        <!-- ✅ عرض رسائل الخطأ العامة -->
+                        <div class="text-danger mb-3">
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary">Login</button>
                         </div>
                     </form>
+
                     <div class="mt-3 text-center">
-                        <a href="/Account/ForgotPassword">Forgot Password?</a>
+                        <a href="/Account/register">Don`t have an account?</a>
                     </div>
                 </div>
             </div>

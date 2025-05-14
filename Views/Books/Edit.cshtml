@@ -5,29 +5,63 @@
 }
 
 <div class="container mt-5">
-    <h2 class="text-warning">✏️ Edit Book</h2>
-    <form asp-action="Edit" method="post" class="mt-4">
-        <input type="hidden" asp-for="BookId" />
+    <div class="text-center mb-4">
+        <img src="https://img.icons8.com/color/96/edit-book.png" alt="Edit Book Icon" width="60" />
+        <h2 class="text-warning fw-bold mt-3">Edit Book Details</h2>
+        <p class="text-muted">Make changes to the book information below</p>
+    </div>
 
-        <div class="mb-3">
-            <label for="Title" class="form-label">Book Title</label>
-            <input type="text" class="form-control" id="Title" name="Title" value="@Model.Title" required />
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-5">
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="BookId" />
+
+                <div class="mb-4">
+                    <label for="Title" class="form-label fw-semibold">📘 Book Title</label>
+                    <input type="text" class="form-control form-control-lg rounded-3" id="Title" name="Title" value="@Model.Title" required />
+                </div>
+
+                <div class="mb-4">
+                    <label for="Author" class="form-label fw-semibold">✍️ Author</label>
+                    <input type="text" class="form-control form-control-lg rounded-3" id="Author" name="Author" value="@Model.Author" required />
+                </div>
+
+                <div class="mb-4">
+                    <label for="CategoryId" class="form-label fw-semibold">📂 Category</label>
+                    @Html.DropDownListFor(
+                             model => model.CategoryId,
+                             (IEnumerable<SelectListItem>)ViewBag.Categories,
+                             "Select Category",
+                             new { @class = "form-select form-select-lg rounded-3", required = "required" })
+                </div>
+
+                <button type="submit" class="btn btn-warning btn-lg w-100 rounded-pill shadow">
+                    ✅ Update Book
+                </button>
+            </form>
         </div>
-
-        <div class="mb-3">
-            <label for="Author" class="form-label">Author</label>
-            <input type="text" class="form-control" id="Author" name="Author" value="@Model.Author" required />
-        </div>
-
-        <div class="mb-3">
-            <label for="CategoryId" class="form-label">Category</label>
-            @Html.DropDownListFor(
-                     model => model.CategoryId,
-                     (IEnumerable<SelectListItem>)ViewBag.Categories,
-                     "Select Category",
-                     new { @class = "form-select", required = "required" })
-        </div>
-
-        <button type="submit" class="btn btn-lg btn-warning px-4 py-2 shadow-lg rounded-pill w-100">Update Book</button>
-    </form>
+    </div>
 </div>
+
+<style>
+    label {
+        font-size: 1.1rem;
+    }
+
+    .form-control, .form-select {
+        background-color: #fdfdfd;
+        border: 1px solid #ddd;
+        transition: border-color 0.3s ease-in-out;
+    }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #ffc107;
+            box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+        }
+
+    .btn-warning:hover {
+        background-color: #e0a800;
+        border-color: #d39e00;
+        transform: scale(1.02);
+    }
+</style>

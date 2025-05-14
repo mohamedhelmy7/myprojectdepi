@@ -4,25 +4,64 @@
     ViewData["Title"] = "Categories";
 }
 
-<div class="container mt-4">
-    <h2 class="text-info">📂 All Categories</h2>
-    <table class="table table-hover mt-4">
-        <thead class="table-dark">
-            <tr>
-                <th>Name</th>
-                <th>View Books</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var category in Model)
-            {
-                <tr>
-                    <td>@category.Name</td>
-                    <td>
-                        <a class="btn btn-outline-primary btn-sm" asp-action="BooksByCategory" asp-route-id="@category.CategoryId">📖 View Books</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <img src="https://img.icons8.com/color/96/folder-invoices--v1.png" alt="Categories Icon" width="60" class="mb-3" />
+        <h1 class="display-5 fw-bold text-uppercase text-info">All Categories</h1>
+        <p class="lead text-muted">Browse categories and discover the books they hold 📚</p>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive rounded-4 shadow-sm">
+            <table class="table table-bordered table-hover align-middle text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th class="text-uppercase">📂 Category Name</th>
+                        <th class="text-uppercase">🔍 View Books</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var category in Model)
+                    {
+                        <tr>
+                            <td class="fw-medium">@category.Name</td>
+                            <td>
+                                <a class="btn btn-primary btn-sm rounded-pill px-3"
+                                   asp-action="BooksByCategory" asp-route-id="@category.CategoryId">
+                                    📖 View Books
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center mt-4 shadow-sm">
+            <i class="bi bi-exclamation-triangle"></i> No categories found.
+        </div>
+    }
 </div>
+
+<style>
+    table th, table td {
+        font-size: 1.1rem;
+        padding: 1rem;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f9f9f9;
+    }
+
+    .btn-primary {
+        transition: all 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: #0d6efd;
+            transform: scale(1.05);
+        }
+</style>

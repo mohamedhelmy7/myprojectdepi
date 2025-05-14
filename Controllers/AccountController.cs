@@ -1,9 +1,7 @@
 ﻿using DEPI_Library.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DEPI_Library.Controllers
 {
@@ -26,60 +24,59 @@ namespace DEPI_Library.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (var hmac = new HMACSHA512())
+                var user = new User
                 {
-                    var passwordBytes = Encoding.UTF8.GetBytes(model.Password);
-                    var passwordHash = hmac.ComputeHash(passwordBytes);
+                    Name = model.Name,
+                    Email = model.Email
+                };
 
-                    var user = new User
-                    {
-                        Name = model.Name,
-                        Email = model.Email,
-                        PasswordHash = Convert.ToBase64String(passwordHash),
-                        PasswordSalt = hmac.Key
-                    };
+                var hasher = new PasswordHasher<User>();
+                user.PasswordHash = hasher.HashPassword(user, model.Password);
 
-                    _context.Users.Add(user);
-                    await _context.SaveChangesAsync();
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
 
-                    return RedirectToAction("Login");
-                }
+                return RedirectToAction("Login");
             }
 
             return View(model);
         }
 
 
+
         // GET: Login page
         [HttpGet]
-        public IActionResult Login() => View();
+        public IActionResult Login()
+        {
+            return View();
+        }
 
-        // POST: Login page
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == model.Email);
+
                 if (user != null)
                 {
-                    using (var hmac = new HMACSHA512(user.PasswordSalt))
-                    {
-                        var inputPasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(model.Password));
-                        var inputPasswordHashBase64 = Convert.ToBase64String(inputPasswordHash);
+                    var hasher = new PasswordHasher<User>();
+                    var result = hasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
 
-                        if (user.PasswordHash == inputPasswordHashBase64)
-                        {
-                            HttpContext.Session.SetString("UserId", user.UserId.ToString());
-                            return RedirectToAction("Index", "Home");
-                        }
+                    if (result == PasswordVerificationResult.Success)
+                    {
+                        HttpContext.Session.SetString("UserId", user.UserId.ToString());
+                        return RedirectToAction("Index", "Home");
                     }
                 }
+
                 ModelState.AddModelError("", "Invalid login attempt.");
             }
 
             return View(model);
         }
+
+
 
 
         // POST: Logout

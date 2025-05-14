@@ -6,42 +6,77 @@
 
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="text-primary">📚 Book List</h2>
-        <a asp-action="Create" class="btn btn-lg btn-success px-4 py-2 shadow-lg rounded-pill">+ Add Book</a>
+        <div>
+            <h2 class="text-primary fw-bold">
+                <i class="bi bi-journal-bookmark-fill me-2"></i>Book List
+            </h2>
+            <p class="text-muted">Manage all your books from here</p>
+        </div>
+        <a asp-action="Create" class="btn btn-success btn-lg shadow rounded-pill px-4 py-2">
+            <i class="bi bi-plus-circle me-1"></i> Add Book
+        </a>
     </div>
 
-    <table class="table table-hover shadow-sm rounded bg-white">
-        <thead class="thead-dark">
-            <tr class="bg-dark text-white">
-                <th>Title</th>
-                <th>Author</th>
-                <th>Category</th>
-                <th style="width: 200px;">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var book in Model)
-            {
-                <tr>
-                    <td>@book.Title</td>
-                    <td>@book.Author</td>
-                    <td>@book.Category?.Name  </td>
-                    <td>
-                        <!-- Action Buttons -->
-                        <div class="btn-group" role="group">
-                            <a asp-action="Edit" asp-route-id="@book.BookId" class="btn btn-outline-primary btn-lg px-3 py-2 shadow-sm rounded-3 mx-2 transition-all hover:bg-blue-600 hover:text-white">
-                                <i class="bi bi-pencil-square"></i> Edit
-                            </a>
-                            <a asp-action="Delete" asp-route-id="@book.BookId" class="btn btn-outline-danger btn-lg px-3 py-2 shadow-sm rounded-3 mx-2 transition-all hover:bg-red-600 hover:text-white">
-                                <i class="bi bi-trash"></i> Delete
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center shadow-sm">
+            <i class="bi bi-info-circle-fill"></i> No books available. Click "Add Book" to get started.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover shadow-sm bg-white rounded">
+                <thead class="table-dark">
+                    <tr class="align-middle text-center">
+                        <th>📖 Title</th>
+                        <th>✍️ Author</th>
+                        <th>📂 Category</th>
+                        <th style="width: 200px;">🔧 Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var book in Model)
+                    {
+                        <tr class="align-middle text-center">
+                            <td>@book.Title</td>
+                            <td>@book.Author</td>
+                            <td>@book.Category?.Name</td>
+                            <td>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a asp-action="Edit" asp-route-id="@book.BookId"
+                                       class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                                        <i class="bi bi-pencil-fill me-1"></i> Edit
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@book.BookId"
+                                       class="btn btn-outline-danger btn-sm rounded-pill px-3">
+                                        <i class="bi bi-trash-fill me-1"></i> Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
 </div>
 
-<!-- Add Bootstrap Icons (Optional for edit/delete icons) -->
+<!-- Bootstrap Icons (if not already added) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+    table th, table td {
+        vertical-align: middle;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+    .btn-outline-danger:hover {
+        background-color: #dc3545;
+        color: white;
+    }
+</style>

@@ -4,8 +4,10 @@
 
 <style>
     body {
-        background: linear-gradient(135deg, #fdfbfb, #ebedee);
+        background: linear-gradient(120deg, #fdfbfb, #d1d8e0);
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
     }
 
     .hero-section {
@@ -16,36 +18,52 @@
         justify-content: center;
         text-align: center;
         padding: 40px 20px;
+        background: white;
+        border-radius: 20px;
+        margin: 40px auto;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 1000px;
+        animation: fadeIn 1.2s ease-in-out;
     }
 
     .hero-title {
-        font-size: 3rem;
-        font-weight: 800;
+        font-size: 3.2rem;
+        font-weight: 900;
         color: #2c3e50;
         margin-bottom: 20px;
+        letter-spacing: 1px;
+        animation: slideDown 1s ease-out;
     }
 
+        .hero-title::before {
+            content: "📖 ";
+        }
+
     .hero-subtitle {
-        font-size: 1.25rem;
+        font-size: 1.3rem;
         color: #555;
         max-width: 600px;
-        margin-bottom: 30px;
+        margin-bottom: 35px;
+        line-height: 1.6;
     }
 
     .btn-modern {
-        background: #3498db;
+        background: linear-gradient(135deg, #3498db, #2980b9);
         color: white;
-        padding: 12px 30px;
-        border-radius: 30px;
+        padding: 14px 34px;
+        border-radius: 40px;
         font-size: 1.1rem;
         transition: all 0.3s ease;
         border: none;
+        text-decoration: none;
+        font-weight: bold;
+        box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
     }
 
         .btn-modern:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(41, 128, 185, 0.5);
         }
 
     footer {
@@ -55,15 +73,18 @@
         color: #444;
         font-size: 0.9rem;
         border-top: 1px solid #ddd;
+        margin-top: 40px;
     }
+
+
 </style>
 
 <div class="hero-section">
-    <h1 class="hero-title">📚 Welcome to DEPI Library</h1>
+    <h1 class="hero-title">Welcome to DEPI Library</h1>
     <p class="hero-subtitle">Explore thousands of books, manage borrowings, and dive into a modern digital reading experience.</p>
-    <a href="/Books" class="btn btn-modern">Start Exploring</a>
+    <a href="/Books" class="btn-modern">Start Exploring</a>
 </div>
 
 <footer>
-    
+    &copy; @DateTime.Now.Year DEPI Library. All rights reserved.
 </footer>

@@ -4,31 +4,55 @@
     ViewData["Title"] = "Books in " + Model.Name;
 }
 
-<div class="container mt-4">
-    <h2 class="text-primary">📚 Books in @Model.Name</h2>
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <img src="https://img.icons8.com/color/96/000000/books.png" alt="Books Icon" width="60" class="mb-3" />
+        <h1 class="display-5 fw-bold text-uppercase text-primary">Books in @Model.Name</h1>
+        <p class="lead text-muted">Explore a curated list of books under the <strong>@Model.Name</strong> category.</p>
+    </div>
 
     @if (Model.Books != null && Model.Books.Any())
     {
-        <table class="table table-bordered mt-4">
-            <thead class="table-dark">
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var book in Model.Books)
-                {
+        <div class="table-responsive rounded-4 shadow-sm">
+            <table class="table table-bordered table-hover align-middle text-center">
+                <thead class="table-light">
                     <tr>
-                        <td>@book.Title</td>
-                        <td>@book.Author</td>
+                        <th class="text-uppercase">📖 Title</th>
+                        <th class="text-uppercase">✍️ Author</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var book in Model.Books)
+                    {
+                        <tr>
+                            <td class="fw-medium">@book.Title</td>
+                            <td>@book.Author</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     }
     else
     {
-        <div class="alert alert-warning mt-4">No books found in this category.</div>
+        <div class="alert alert-info text-center mt-4 shadow-sm">
+            <i class="bi bi-emoji-frown"></i> No books found in this category.
+        </div>
     }
 </div>
+
+<style>
+    table th, table td {
+        font-size: 1.1rem;
+        padding: 1rem;
+    }
+
+    .table thead th {
+        background-color: #f8f9fa;
+        color: #333;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+</style>

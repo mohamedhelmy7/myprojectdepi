@@ -5,32 +5,57 @@
 }
 
 <div class="container mt-5">
-    <h2 class="text-primary">📖 Borrow Report</h2>
+    <div class="text-center mb-4">
+        <img src="https://img.icons8.com/color/96/library.png" alt="Borrow Icon" width="60" />
+        <h2 class="text-primary fw-bold mt-3">📖 Borrow Report</h2>
+        <p class="text-muted">Overview of borrowed books by users.</p>
+    </div>
 
-    <!-- زر إضافة استعارة جديدة (محاذاة لليمين و تصميم حديث) -->
+    <!-- Add Borrow Button -->
     <div class="d-flex justify-content-end mb-3">
-        <a href="@Url.Action("Create", "Borrows")" class="btn btn-outline-primary btn-lg px-4 py-2">
-            <i class="fas fa-plus-circle"></i> Add Borrow
+        <a href="@Url.Action("Create", "Borrows")" class="btn btn-outline-primary btn-lg shadow-sm rounded-pill">
+            <i class="fas fa-plus-circle me-2"></i> Add Borrow
         </a>
     </div>
 
-    <table class="table table-bordered mt-4">
-        <thead>
-            <tr>
-                <th>Book Title</th>
-                <th>User Name</th>
-                <th>Borrow Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var borrow in Model)
-            {
-                <tr>
-                    <td>@borrow.Book?.Title</td>
-                    <td>@borrow.User?.Name</td>
-                    <td>@borrow.BorrowDate.ToString("yyyy-MM-dd")</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="card shadow border-0 rounded-4">
+        <div class="card-body p-4">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light text-center">
+                    <tr>
+                        <th class="text-uppercase text-muted">📘 Book Title</th>
+                        <th class="text-uppercase text-muted">👤 User Name</th>
+                        <th class="text-uppercase text-muted">📅 Borrow Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var borrow in Model)
+                    {
+                        <tr>
+                            <td>@borrow.Book?.Title</td>
+                            <td>@borrow.User?.Name</td>
+                            <td>@borrow.BorrowDate.ToString("yyyy-MM-dd")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+
+<style>
+    .table th, .table td {
+        vertical-align: middle;
+        font-size: 1rem;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #0d6efd;
+        color: white;
+        transform: scale(1.02);
+    }
+
+    .card {
+        background-color: #fff;
+    }
+</style>

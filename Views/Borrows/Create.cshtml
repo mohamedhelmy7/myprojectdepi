@@ -5,18 +5,55 @@
 }
 
 <div class="container mt-5">
-    <h2 class="text-primary">📚 Add New Borrow</h2>
-    <form asp-action="Create" method="post" class="mt-4">
-        <div class="mb-3">
-            <label for="BookId" class="form-label">Book</label>
-            <select asp-for="BookId" class="form-control" asp-items="ViewBag.Books"></select>
-        </div>
+    <div class="text-center mb-4">
+        <img src="https://img.icons8.com/color/96/borrow-book.png" alt="Borrow Icon" width="60" />
+        <h2 class="text-primary fw-bold mt-3">Add New Borrow</h2>
+        <p class="text-muted">Assign a book to a user from the list below.</p>
+    </div>
 
-        <div class="mb-3">
-            <label for="UserId" class="form-label">User</label>
-            <select asp-for="UserId" class="form-control" asp-items="ViewBag.Users"></select>
-        </div>
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-5">
+            <form asp-action="Create" method="post">
+                <div class="mb-4">
+                    <label for="BookId" class="form-label fw-semibold">📖 Select Book</label>
+                    <select asp-for="BookId" class="form-select form-select-lg rounded-3" asp-items="ViewBag.Books" required>
+                        <option disabled selected value="">-- Choose a Book --</option>
+                    </select>
+                </div>
 
-        <button type="submit" class="btn btn-primary">Add Borrow</button>
-    </form>
+                <div class="mb-4">
+                    <label for="UserId" class="form-label fw-semibold">👤 Select User</label>
+                    <select asp-for="UserId" class="form-select form-select-lg rounded-3" asp-items="ViewBag.Users" required>
+                        <option disabled selected value="">-- Choose a User --</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill shadow">
+                    ➕ Add Borrow Record
+                </button>
+            </form>
+        </div>
+    </div>
 </div>
+
+<style>
+    label {
+        font-size: 1.1rem;
+    }
+
+    .form-select {
+        background-color: #fdfdfd;
+        border: 1px solid #ddd;
+        transition: border-color 0.3s ease-in-out;
+    }
+
+        .form-select:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+        }
+
+    .btn-primary:hover {
+        background-color: #0b5ed7;
+        transform: scale(1.02);
+    }
+</style>

@@ -5,25 +5,60 @@
 }
 
 <div class="container mt-5">
-    <h2 class="text-danger">🗑️ Confirm Delete</h2>
-    <div class="alert alert-danger mt-4 shadow-sm rounded">
-        Are you sure you want to delete the book <strong>@Model.Title</strong> by <em>@Model.Author</em>?
+    <div class="text-center mb-4">
+        <img src="https://img.icons8.com/color/96/delete-forever.png" alt="Delete Icon" class="mb-3" />
+        <h1 class="text-danger fw-bold">Confirm Deletion</h1>
+        <p class="text-muted">You're about to delete a book permanently. This action cannot be undone.</p>
     </div>
 
-    <dl class="row">
-        <dt class="col-sm-3">Title</dt>
-        <dd class="col-sm-9">@Model.Title</dd>
+    <div class="alert alert-danger shadow rounded-3 p-4">
+        <h4 class="mb-3">⚠️ Are you sure?</h4>
+        <p>
+            You are about to delete the book <strong>@Model.Title</strong>
+            written by <em>@Model.Author</em>.
+        </p>
+    </div>
 
-        <dt class="col-sm-3">Author</dt>
-        <dd class="col-sm-9">@Model.Author</dd>
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">📖 Title</dt>
+                <dd class="col-sm-9">@Model.Title</dd>
 
-        <dt class="col-sm-3">Category</dt>
-        <dd class="col-sm-9">@Model.Category?.Name</dd>
-    </dl>
+                <dt class="col-sm-3">✍️ Author</dt>
+                <dd class="col-sm-9">@Model.Author</dd>
 
-    <form asp-action="Delete" method="post">
+                <dt class="col-sm-3">📂 Category</dt>
+                <dd class="col-sm-9">@Model.Category?.Name</dd>
+            </dl>
+        </div>
+    </div>
+
+    <form asp-action="Delete" method="post" class="d-flex justify-content-center gap-3">
         <input type="hidden" asp-for="BookId" />
-        <button type="submit" class="btn btn-danger rounded-pill px-4">Delete</button>
-        <a asp-action="Index" class="btn btn-secondary rounded-pill px-4 ms-2">Cancel</a>
+        <button type="submit" class="btn btn-danger btn-lg rounded-pill px-4 shadow-sm">
+            🗑️ Delete
+        </button>
+        <a asp-action="Index" class="btn btn-outline-secondary btn-lg rounded-pill px-4 shadow-sm">
+            ❌ Cancel
+        </a>
     </form>
 </div>
+
+<style>
+    dt {
+        font-weight: 600;
+    }
+
+    .card-body {
+        font-size: 1.1rem;
+    }
+
+    .btn {
+        transition: all 0.2s ease;
+    }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+</style>
